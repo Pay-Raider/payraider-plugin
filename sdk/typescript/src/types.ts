@@ -15,6 +15,37 @@ export interface StellarInsightsConfig {
   timeout?: number;
 }
 
+// ─── SDK Initialization ────────────────────────────────────────────────────────
+
+export interface SDKInitConfig extends StellarInsightsConfig {
+  /** Enable debug logging */
+  debug?: boolean;
+  /** Target network: mainnet or testnet */
+  network?: "mainnet" | "testnet";
+  /** Enable automatic retry */
+  autoRetry?: boolean;
+  /** Cache timeout in seconds (0 = no cache) */
+  cacheTimeout?: number;
+  /** Enable request/response logging */
+  logRequests?: boolean;
+}
+
+export interface SDKInitContext {
+  config: SDKInitConfig;
+  isInitialized: boolean;
+  isReactNative: boolean;
+  environment: "browser" | "node" | "react-native";
+  version: string;
+}
+
+export interface PlatformInfo {
+  platform: string;
+  environment: "browser" | "node" | "react-native";
+  isReactNative: boolean;
+  isBrowser: boolean;
+  isNode: boolean;
+}
+
 // ─── Pagination ───────────────────────────────────────────────────────────────
 
 export interface PaginationParams {

@@ -16,6 +16,15 @@ import {
   WebhooksResource,
 } from "./resources.js";
 import type { StellarInsightsConfig } from "./types.js";
+import {
+  SDKInitializer,
+  initializeForMobile,
+  initializeForWeb,
+  initializeForBackend,
+  autoInitialize,
+  EnvironmentDetector,
+} from "./sdk-init.js";
+import { ApiClient, BatchApiClient, ApiClientError } from "./api-client.js";
 
 export class StellarInsights {
   readonly anchors: AnchorsResource;
@@ -32,11 +41,13 @@ export class StellarInsights {
   readonly ml: MlResource;
   readonly governance: GovernanceResource;
   readonly assetVerification: AssetVerificationResource;
+  readonly apiClient: ApiClient;
 
   private readonly http: HttpClient;
 
   constructor(config: StellarInsightsConfig = {}) {
     this.http = new HttpClient(config);
+    this.apiClient = new ApiClient(config);
     this.anchors = new AnchorsResource(this.http);
     this.corridors = new CorridorsResource(this.http);
     this.prices = new PricesResource(this.http);
@@ -63,7 +74,15 @@ export { AnalyticsAPIModule } from "./analytics_api_module.js";
 export { TypeScriptTypes } from "./typescript_types.js";
 export { RequestCancellation } from "./request_cancellation.js";
 export { AnchorsAPIModule } from "./anchors_api_module.js";
+
+// SDK Initialization exports
+export { SDKInitializer, initializeForMobile, initializeForWeb, initializeForBackend, autoInitialize, EnvironmentDetector };
+
+// API Client Core exports
+export { ApiClient, BatchApiClient, ApiClientError };
+
 export type * from "./types.js";
+export type * from "./api-client.js";
 export type * from "./types/sdk_unit_tests.js";
 export type * from "./types/react_native_compatibility.js";
 export type * from "./types/npm_publishing_setup.js";
