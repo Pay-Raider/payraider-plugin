@@ -18,6 +18,7 @@
     "test": "vitest run",
     "lint": "tsc --noEmit"
   },
+  "keywords": ["stellar", "sdk", "payments", "analytics", "request-deduplication"],
   "keywords": ["stellar", "sdk", "payments", "analytics", "network-context"],
   "keywords": ["stellar", "sdk", "payments", "analytics", "authentication"],
   "keywords": ["stellar", "sdk", "payments", "analytics", "retry-backoff"],
