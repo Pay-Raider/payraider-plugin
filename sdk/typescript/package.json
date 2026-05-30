@@ -18,7 +18,7 @@
     "test": "vitest run",
     "lint": "tsc --noEmit"
   },
-  "keywords": ["stellar", "sdk", "payments", "analytics"],
+  "keywords": ["stellar", "sdk", "payments", "analytics", "retry-backoff"],
   "license": "MIT",
   "devDependencies": {
     "tsup": "8.0.2",
