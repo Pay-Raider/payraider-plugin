@@ -74,6 +74,9 @@ export { AnalyticsAPIModule } from "./analytics_api_module.js";
 export { TypeScriptTypes } from "./typescript_types.js";
 export { RequestCancellation } from "./request_cancellation.js";
 export { RequestDeduplication } from "./request_deduplication.js";
+export { NetworkContextManagement } from "./network_context_management.js";
+export { AuthenticationModule } from "./authentication_module.js";
+export { RetryWithBackoff } from "./retry_with_backoff.js";
 export { AnchorsAPIModule } from "./anchors_api_module.js";
 
 // SDK Initialization exports
@@ -91,4 +94,7 @@ export type * from "./types/analytics_api_module.js";
 export type * from "./types/typescript_types.js";
 export type * from "./types/request_cancellation.js";
 export type * from "./types/request_deduplication.js";
+export type * from "./types/network_context_management.js";
+export type * from "./types/authentication_module.js";
+export type * from "./types/retry_with_backoff.js";
 export type * from "./types/anchors_api_module.js";
