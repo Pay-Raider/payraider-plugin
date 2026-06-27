@@ -26,6 +26,39 @@ import {
 } from "./sdk-init.js";
 import { ApiClient, BatchApiClient, ApiClientError } from "./api-client.js";
 
+export interface NetworkConfig {
+  rpcUrl: string;
+  horizonUrl: string;
+  networkPassphrase: string;
+  apiBaseUrl: string;
+}
+
+export const NETWORKS: Record<"mainnet" | "testnet", NetworkConfig> = {
+  mainnet: {
+    rpcUrl: "https://stellar.api.onfinality.io/public",
+    horizonUrl: "https://horizon.stellar.org",
+    networkPassphrase: "Public Global Stellar Network ; September 2015",
+    apiBaseUrl: "https://api.stellarinsights.io",
+  },
+  testnet: {
+    rpcUrl: "https://soroban-testnet.stellar.org",
+    horizonUrl: "https://horizon-testnet.stellar.org",
+    networkPassphrase: "Test SDF Network ; September 2015",
+    apiBaseUrl: "https://testnet-api.stellarinsights.io",
+  },
+};
+
+export function createClient(
+  network: "mainnet" | "testnet",
+  config: Omit<StellarInsightsConfig, "baseUrl"> = {},
+): StellarInsights {
+  const networkConfig = NETWORKS[network];
+  return new StellarInsights({
+    ...config,
+    baseUrl: networkConfig.apiBaseUrl,
+  });
+}
+
 export class StellarInsights {
   readonly anchors: AnchorsResource;
   readonly corridors: CorridorsResource;
