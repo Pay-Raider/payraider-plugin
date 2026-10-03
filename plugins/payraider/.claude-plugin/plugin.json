@@ -5,8 +5,8 @@
   "author": {
     "name": "PayRaider"
   },
-  "homepage": "https://github.com/Ndifreke000/stellar-insights/tree/main/plugins/payraider",
-  "repository": "https://github.com/Ndifreke000/stellar-insights",
+  "homepage": "https://github.com/Pay-Raider/payraider-plugin/tree/main/plugins/payraider",
+  "repository": "https://github.com/Pay-Raider/payraider-plugin",
   "license": "MIT",
   "keywords": ["stellar", "payments", "off-ramp", "preflight", "mcp"]
 }

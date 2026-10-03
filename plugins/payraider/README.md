@@ -10,7 +10,7 @@ It is read-only. It never moves funds or signs anything.
 ## Install
 
 ```
-/plugin marketplace add Ndifreke000/stellar-insights
+/plugin marketplace add Pay-Raider/payraider-plugin
 /plugin install payraider@payraider
 ```
 

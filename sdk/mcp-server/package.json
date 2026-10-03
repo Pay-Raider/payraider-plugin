@@ -51,7 +51,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ndifreke000/stellar-insights.git",
+    "url": "git+https://github.com/Pay-Raider/payraider-plugin.git",
     "directory": "sdk/mcp-server"
   }
 }

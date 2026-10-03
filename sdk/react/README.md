@@ -1,6 +1,6 @@
 # @payraider/react
 
-React hooks and components for [PayRaider](https://github.com/Ndifreke000/payraider), built on top of [`@payraider/sdk`](../typescript).
+React hooks and components for [PayRaider](https://github.com/Pay-Raider), built on top of [`@payraider/sdk`](../typescript).
 
 ## Install
 

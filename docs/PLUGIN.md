@@ -139,7 +139,7 @@ Clients connect to `POST https://your-host/mcp` with
 ## 4. Claude plugin
 
 ```
-/plugin marketplace add Ndifreke000/stellar-insights
+/plugin marketplace add Pay-Raider/payraider-plugin
 /plugin install payraider@payraider
 ```
 
@@ -199,9 +199,8 @@ keys and moves no funds.
 ## Deploying it yourself
 
 1. **Run the backend.** The plugin reads from a PayRaider backend. The
-   Render Blueprint in [DEPLOY.md](DEPLOY.md) deploys the backend, the plugin
-   server and the web app together; or see the
-   [testnet quickstart](testnet-quickstart.md). Note the backend's public URL.
+   [payraider-backend](https://github.com/Pay-Raider/payraider-backend) README
+   covers running it locally, with Docker, or on Render. Note its public URL.
 2. **Run the MCP server** with `PAYRAIDER_BASE_URL` set to that URL, using the
    Docker image, `docker compose` or the Fly.io config in `sdk/mcp-server`.
 3. **Set `PAYRAIDER_MCP_AUTH_TOKEN`** if the server is reachable from the

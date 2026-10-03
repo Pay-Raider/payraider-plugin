@@ -2,14 +2,14 @@
   "name": "@payraider/react",
   "version": "0.1.0",
   "description": "React hooks and components for the PayRaider API, built on @payraider/sdk",
-  "homepage": "https://github.com/Ndifreke000/payraider/tree/main/sdk/react#readme",
+  "homepage": "https://github.com/Pay-Raider/payraider-plugin/tree/main/sdk/react#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ndifreke000/payraider.git",
+    "url": "git+https://github.com/Pay-Raider/payraider-plugin.git",
     "directory": "sdk/react"
   },
   "bugs": {
-    "url": "https://github.com/Ndifreke000/payraider/issues"
+    "url": "https://github.com/Pay-Raider/payraider-plugin/issues"
   },
   "publishConfig": {
     "access": "public"

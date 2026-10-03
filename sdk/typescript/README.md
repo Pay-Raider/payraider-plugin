@@ -1,6 +1,6 @@
 # @payraider/sdk
 
-Official TypeScript SDK for the [PayRaider](https://github.com/Ndifreke000/payraider) API — payment corridor reliability, liquidity, trustline, and network-health data for the Stellar network.
+Official TypeScript SDK for the [PayRaider](https://github.com/Pay-Raider) API — payment corridor reliability, liquidity, trustline, and network-health data for the Stellar network.
 
 ## Install
 
