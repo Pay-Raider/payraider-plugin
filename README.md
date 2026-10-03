@@ -86,6 +86,8 @@ docker run -p 3333:3333 \
 
 Configuration and security notes: [`sdk/mcp-server/README.md`](sdk/mcp-server/README.md).
 
+Deploy the hosted server on Render with the `render.yaml` Blueprint; see the [deployment guide](https://github.com/Pay-Raider/payraider-backend/blob/main/docs/DEPLOY.md).
+
 ## Documentation
 
 - [Integration guide](docs/PLUGIN.md): REST contract, how decisions are made, API keys, paying in USDC
