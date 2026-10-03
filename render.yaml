@@ -1,0 +1,20 @@
+# Render Blueprint for the hosted MCP plugin server.
+# Set PAYRAIDER_BASE_URL to your PayRaider API. PAYRAIDER_MCP_AUTH_TOKEN is
+# generated; clients send it as "Authorization: Bearer <token>".
+services:
+- type: web
+  name: payraider-mcp
+  runtime: docker
+  dockerfilePath: ./sdk/mcp-server/Dockerfile
+  dockerContext: ./sdk
+  plan: free
+  region: frankfurt
+  healthCheckPath: /healthz
+  autoDeploy: true
+  envVars:
+  - key: PAYRAIDER_BASE_URL
+    sync: false
+  - key: PAYRAIDER_NETWORK
+    value: mainnet
+  - key: PAYRAIDER_MCP_AUTH_TOKEN
+    generateValue: true
