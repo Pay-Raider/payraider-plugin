@@ -8,10 +8,12 @@ from typing import Any, Optional
 
 import httpx
 
-DEFAULT_BASE_URL = "https://api.payraider.io"
+# The hosted mainnet API. It sleeps when idle and can take up to a minute to
+# answer the first request after a quiet spell, hence the long timeout.
+DEFAULT_BASE_URL = "https://payraider-backend-11ji.onrender.com"
 DEFAULT_MAX_RETRIES = 3
 DEFAULT_RETRY_DELAY = 0.5  # seconds
-DEFAULT_TIMEOUT = 30.0  # seconds
+DEFAULT_TIMEOUT = 90.0  # seconds
 
 RETRYABLE_STATUSES = {429, 500, 502, 503, 504}
 

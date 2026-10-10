@@ -1,17 +1,26 @@
 import { describe, expect, it } from "vitest";
+import { HOSTED_API_URL } from "@payraider/sdk";
 import { ConfigError, loadConfig } from "../src/config.js";
 
 describe("loadConfig", () => {
-  it("defaults to stdio, testnet, loopback and no API key", () => {
+  it("defaults to stdio, mainnet on the hosted API, loopback and no API key", () => {
     const config = loadConfig({}, []);
     expect(config.transport).toBe("stdio");
-    expect(config.network).toBe("testnet");
+    expect(config.network).toBe("mainnet");
+    expect(config.baseUrl).toBe(HOSTED_API_URL);
     expect(config.host).toBe("127.0.0.1");
     expect(config.port).toBe(3333);
     expect(config.apiKey).toBeUndefined();
     expect(config.authToken).toBeUndefined();
     expect(config.allowedOrigins).toEqual([]);
     expect(config.allowWrites).toBe(false);
+  });
+
+  it("requires a base URL for testnet, which has no hosted API", () => {
+    expect(() => loadConfig({ PAYRAIDER_NETWORK: "testnet" }, [])).toThrow(/no hosted PayRaider API for testnet/);
+    expect(
+      loadConfig({ PAYRAIDER_NETWORK: "testnet", PAYRAIDER_BASE_URL: "http://localhost:8080" }, []).baseUrl,
+    ).toBe("http://localhost:8080");
   });
 
   it("treats a blank API key as absent", () => {

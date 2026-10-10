@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from .http import HttpClient, PayRaiderError
+from .http import DEFAULT_BASE_URL, DEFAULT_TIMEOUT, HttpClient, PayRaiderError
 from .resources import (
     AlertsResource,
     AnchorsResource,
@@ -36,10 +36,10 @@ class PayRaider:
         *,
         api_key: Optional[str] = None,
         access_token: Optional[str] = None,
-        base_url: str = "https://api.payraider.io",
+        base_url: str = DEFAULT_BASE_URL,
         max_retries: int = 3,
         retry_delay: float = 0.5,
-        timeout: float = 30.0,
+        timeout: float = DEFAULT_TIMEOUT,
     ) -> None:
         self._http = HttpClient(
             api_key=api_key,

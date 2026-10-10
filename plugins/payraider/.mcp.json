@@ -5,7 +5,7 @@
       "args": ["${CLAUDE_PLUGIN_ROOT}/server/server.mjs", "--stdio"],
       "env": {
         "PAYRAIDER_BASE_URL": "${PAYRAIDER_BASE_URL:-}",
-        "PAYRAIDER_NETWORK": "${PAYRAIDER_NETWORK:-testnet}",
+        "PAYRAIDER_NETWORK": "${PAYRAIDER_NETWORK:-mainnet}",
         "PAYRAIDER_API_KEY": "${PAYRAIDER_API_KEY:-}"
       }
     }

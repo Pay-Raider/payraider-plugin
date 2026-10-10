@@ -1,4 +1,5 @@
 import { HttpClient } from "./http.js";
+import { HOSTED_API_URL, NO_TESTNET_API } from "./hosted.js";
 import {
   AlertsResource,
   AnchorsResource,
@@ -44,25 +45,24 @@ export const NETWORKS: Record<"mainnet" | "testnet", NetworkConfig> = {
     rpcUrl: "https://stellar.api.onfinality.io/public",
     horizonUrl: "https://horizon.stellar.org",
     networkPassphrase: "Public Global Stellar Network ; September 2015",
-    apiBaseUrl: "https://api.payraider.io",
+    apiBaseUrl: HOSTED_API_URL,
   },
   testnet: {
     rpcUrl: "https://soroban-testnet.stellar.org",
     horizonUrl: "https://horizon-testnet.stellar.org",
     networkPassphrase: "Test SDF Network ; September 2015",
-    apiBaseUrl: "https://testnet-api.payraider.io",
+    // No hosted testnet API: createClient requires a baseUrl for testnet.
+    apiBaseUrl: "",
   },
 };
 
 export function createClient(
   network: "mainnet" | "testnet",
-  config: Omit<PayRaiderConfig, "baseUrl"> = {},
+  config: PayRaiderConfig = {},
 ): PayRaider {
-  const networkConfig = NETWORKS[network];
-  const client = new PayRaider({
-    ...config,
-    baseUrl: networkConfig.apiBaseUrl,
-  });
+  const baseUrl = config.baseUrl ?? (NETWORKS[network].apiBaseUrl || undefined);
+  if (!baseUrl) throw new Error(NO_TESTNET_API);
+  const client = new PayRaider({ ...config, baseUrl });
   client.wsNetwork = network;
   return client;
 }
@@ -179,3 +179,4 @@ export type {
   Snapshot,
   SnapshotMetadata,
 } from "./types.js";
+export { HOSTED_API_URL, API_BASE_URLS, DEFAULT_TIMEOUT_MS } from "./hosted.js";

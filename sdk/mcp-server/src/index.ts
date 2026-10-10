@@ -20,8 +20,8 @@ Options:
   --help       Print this help
 
 Environment:
-  PAYRAIDER_BASE_URL             Backend URL (default: the network's hosted API)
-  PAYRAIDER_NETWORK              mainnet | testnet (default: testnet)
+  PAYRAIDER_BASE_URL             Backend URL (default: the hosted mainnet API)
+  PAYRAIDER_NETWORK              mainnet | testnet (default: mainnet; testnet needs PAYRAIDER_BASE_URL)
   PAYRAIDER_API_KEY              Optional; without it the free tier applies
   PAYRAIDER_MCP_TRANSPORT        stdio | http (default: stdio)
   HOST, PORT                     HTTP bind address (default: 127.0.0.1:3333)

@@ -8,10 +8,7 @@ import type {
 import { EnvironmentDetector } from "./sdk-init.js";
 import { SDKError } from "./sdk_error.js";
 
-const NETWORK_URLS: Record<StellarNetwork, string> = {
-  mainnet: "https://api.payraider.io",
-  testnet: "https://testnet-api.payraider.io",
-};
+import { API_BASE_URLS, NO_TESTNET_API } from "./hosted.js";
 
 export class NetworkContextManagement {
   public static readonly HEADER_NAME = "X-Stellar-Network";
@@ -36,7 +33,8 @@ export class NetworkContextManagement {
 
     try {
       const network = params.network ?? this.currentNetwork;
-      const baseUrl = this.config.baseUrl ?? NETWORK_URLS[network];
+      const baseUrl = this.config.baseUrl ?? API_BASE_URLS[network];
+      if (!baseUrl) throw new SDKError(NO_TESTNET_API, { network });
       const environment = EnvironmentDetector.detectEnvironment();
 
       return {
@@ -87,7 +85,9 @@ export class NetworkContextManagement {
   public getBaseUrl(network?: StellarNetwork): string {
     const resolved = network ?? this.currentNetwork;
     NetworkContextManagement.validateNetwork(resolved);
-    return this.config.baseUrl ?? NETWORK_URLS[resolved];
+    const baseUrl = this.config.baseUrl ?? API_BASE_URLS[resolved];
+    if (!baseUrl) throw new SDKError(NO_TESTNET_API, { network: resolved });
+    return baseUrl;
   }
 
   /** Subscribe to network change events. Returns an unsubscribe function. */

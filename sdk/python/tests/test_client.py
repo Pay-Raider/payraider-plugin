@@ -5,7 +5,7 @@ import respx
 
 from payraider import PayRaider, PayRaiderError
 
-BASE = "https://api.payraider.io"
+BASE = "https://payraider-backend-11ji.onrender.com"
 
 
 @pytest.fixture

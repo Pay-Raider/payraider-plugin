@@ -23171,10 +23171,11 @@ var StdioServerTransport = class {
 };
 
 // ../typescript/dist/index.mjs
-var DEFAULT_BASE_URL = "https://api.payraider.io";
+var HOSTED_API_URL = "https://payraider-backend-11ji.onrender.com";
+var DEFAULT_TIMEOUT_MS = 9e4;
 var DEFAULT_MAX_RETRIES = 3;
 var DEFAULT_RETRY_DELAY = 500;
-var DEFAULT_TIMEOUT = 3e4;
+var DEFAULT_TIMEOUT = DEFAULT_TIMEOUT_MS;
 var RETRYABLE_STATUSES = /* @__PURE__ */ new Set([429, 500, 502, 503, 504]);
 var PayRaiderError = class extends Error {
   constructor(status, code, message, requestId) {
@@ -23195,7 +23196,7 @@ var HttpClient = class {
   timeout;
   token;
   constructor(config2) {
-    this.baseUrl = (config2.baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, "");
+    this.baseUrl = (config2.baseUrl ?? HOSTED_API_URL).replace(/\/$/, "");
     this.maxRetries = config2.maxRetries ?? DEFAULT_MAX_RETRIES;
     this.retryDelay = config2.retryDelay ?? DEFAULT_RETRY_DELAY;
     this.timeout = config2.timeout ?? DEFAULT_TIMEOUT;
@@ -23860,13 +23861,14 @@ var NETWORKS = {
     rpcUrl: "https://stellar.api.onfinality.io/public",
     horizonUrl: "https://horizon.stellar.org",
     networkPassphrase: "Public Global Stellar Network ; September 2015",
-    apiBaseUrl: "https://api.payraider.io"
+    apiBaseUrl: HOSTED_API_URL
   },
   testnet: {
     rpcUrl: "https://soroban-testnet.stellar.org",
     horizonUrl: "https://horizon-testnet.stellar.org",
     networkPassphrase: "Test SDF Network ; September 2015",
-    apiBaseUrl: "https://testnet-api.payraider.io"
+    // No hosted testnet API: createClient requires a baseUrl for testnet.
+    apiBaseUrl: ""
   }
 };
 var PayRaider = class {
@@ -23954,11 +23956,17 @@ function parseBaseUrl(raw) {
   return raw.replace(/\/+$/, "");
 }
 function loadConfig(env = process.env, argv = process.argv.slice(2)) {
-  const network = env.PAYRAIDER_NETWORK === "mainnet" ? "mainnet" : "testnet";
+  const network = env.PAYRAIDER_NETWORK === "testnet" ? "testnet" : "mainnet";
   let transport = env.PAYRAIDER_MCP_TRANSPORT === "http" ? "http" : "stdio";
   if (argv.includes("--http")) transport = "http";
   if (argv.includes("--stdio")) transport = "stdio";
-  const baseUrl = parseBaseUrl(nonEmpty(env.PAYRAIDER_BASE_URL) ?? NETWORKS[network].apiBaseUrl);
+  const configured = nonEmpty(env.PAYRAIDER_BASE_URL) ?? nonEmpty(NETWORKS[network].apiBaseUrl);
+  if (!configured) {
+    throw new ConfigError(
+      "There is no hosted PayRaider API for testnet. Set PAYRAIDER_BASE_URL to your own backend, or use PAYRAIDER_NETWORK=mainnet."
+    );
+  }
+  const baseUrl = parseBaseUrl(configured);
   return {
     apiKey: nonEmpty(env.PAYRAIDER_API_KEY),
     baseUrl,
@@ -34412,8 +34420,8 @@ Options:
   --help       Print this help
 
 Environment:
-  PAYRAIDER_BASE_URL             Backend URL (default: the network's hosted API)
-  PAYRAIDER_NETWORK              mainnet | testnet (default: testnet)
+  PAYRAIDER_BASE_URL             Backend URL (default: the hosted mainnet API)
+  PAYRAIDER_NETWORK              mainnet | testnet (default: mainnet; testnet needs PAYRAIDER_BASE_URL)
   PAYRAIDER_API_KEY              Optional; without it the free tier applies
   PAYRAIDER_MCP_TRANSPORT        stdio | http (default: stdio)
   HOST, PORT                     HTTP bind address (default: 127.0.0.1:3333)

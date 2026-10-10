@@ -1,9 +1,9 @@
 import type { PayRaiderConfig, ApiError } from "./types.js";
+import { DEFAULT_TIMEOUT_MS, HOSTED_API_URL } from "./hosted.js";
 
-const DEFAULT_BASE_URL = "https://api.payraider.io";
 const DEFAULT_MAX_RETRIES = 3;
 const DEFAULT_RETRY_DELAY = 500;
-const DEFAULT_TIMEOUT = 30_000;
+const DEFAULT_TIMEOUT = DEFAULT_TIMEOUT_MS;
 
 /** Errors that should trigger a retry */
 const RETRYABLE_STATUSES = new Set([429, 500, 502, 503, 504]);
@@ -28,7 +28,7 @@ export class HttpClient {
   private token: string | undefined;
 
   constructor(config: PayRaiderConfig) {
-    this.baseUrl = (config.baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, "");
+    this.baseUrl = (config.baseUrl ?? HOSTED_API_URL).replace(/\/$/, "");
     this.maxRetries = config.maxRetries ?? DEFAULT_MAX_RETRIES;
     this.retryDelay = config.retryDelay ?? DEFAULT_RETRY_DELAY;
     this.timeout = config.timeout ?? DEFAULT_TIMEOUT;

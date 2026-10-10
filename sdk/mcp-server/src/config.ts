@@ -56,13 +56,20 @@ export function loadConfig(
   env: Record<string, string | undefined> = process.env,
   argv: string[] = process.argv.slice(2),
 ): ServerConfig {
-  const network = env.PAYRAIDER_NETWORK === "mainnet" ? "mainnet" : "testnet";
+  // Mainnet by default: it is the only network with a hosted API.
+  const network = env.PAYRAIDER_NETWORK === "testnet" ? "testnet" : "mainnet";
 
   let transport: Transport = env.PAYRAIDER_MCP_TRANSPORT === "http" ? "http" : "stdio";
   if (argv.includes("--http")) transport = "http";
   if (argv.includes("--stdio")) transport = "stdio";
 
-  const baseUrl = parseBaseUrl(nonEmpty(env.PAYRAIDER_BASE_URL) ?? NETWORKS[network].apiBaseUrl);
+  const configured = nonEmpty(env.PAYRAIDER_BASE_URL) ?? nonEmpty(NETWORKS[network].apiBaseUrl);
+  if (!configured) {
+    throw new ConfigError(
+      "There is no hosted PayRaider API for testnet. Set PAYRAIDER_BASE_URL to your own backend, or use PAYRAIDER_NETWORK=mainnet.",
+    );
+  }
+  const baseUrl = parseBaseUrl(configured);
 
   return {
     apiKey: nonEmpty(env.PAYRAIDER_API_KEY),

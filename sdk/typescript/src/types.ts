@@ -5,7 +5,7 @@ export interface PayRaiderConfig {
   apiKey?: string;
   /** OAuth2 access token */
   accessToken?: string;
-  /** Override base URL (default: https://api.payraider.io) */
+  /** Override base URL (default: the hosted mainnet API, see HOSTED_API_URL) */
   baseUrl?: string;
   /** Max retry attempts on 429/5xx (default: 3) */
   maxRetries?: number;

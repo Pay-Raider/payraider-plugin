@@ -30,7 +30,7 @@ Part of [PayRaider](https://github.com/Pay-Raider): [backend](https://github.com
 ```ts
 import { PayRaider } from "@payraider/sdk";
 
-const client = new PayRaider({ baseUrl: "https://<your-payraider-api>" });
+const client = new PayRaider(); // hosted mainnet API by default
 const check = await client.preflight.check({
   source_asset: "USDC",
   destination_asset: "NGN",
@@ -47,12 +47,14 @@ if (check.decision !== "proceed") {
 ```python
 from payraider import PayRaider
 
-async with PayRaider(base_url="https://<your-payraider-api>") as client:
+async with PayRaider() as client:  # hosted mainnet API by default
     check = await client.preflight.check("USDC", "NGN", amount_usd=2500)
     print(check["decision"], check["summary"])
 ```
 
 No API key is needed to start. Add `apiKey` / `api_key` for a higher rate limit.
+
+By default every package talks to the hosted mainnet API at `https://payraider-backend-11ji.onrender.com`. Pass `baseUrl` / `base_url` (or set `PAYRAIDER_BASE_URL`) to use your own backend; testnet has no hosted API, so it always needs one. The hosted API sleeps when idle, so the first call after a quiet spell can take up to a minute; the default timeout (90 s) allows for it.
 
 ## Use it from Claude
 
@@ -61,7 +63,7 @@ No API key is needed to start. Add `apiKey` / `api_key` for a higher rate limit.
 /plugin install payraider@payraider
 ```
 
-Set `PAYRAIDER_BASE_URL` to your PayRaider API, then run `/preflight USDC NGN 2500` or just ask: *"Is it safe to pay out $2,500 from USDC to NGN right now?"*
+Run `/preflight USDC NGN 2500` or just ask: *"Is it safe to pay out $2,500 from USDC to NGN right now?"*
 
 ## Use it from any AI agent (MCP)
 
@@ -70,8 +72,8 @@ The MCP server exposes `preflight_payment` and 19 other read-only tools (corrido
 ```bash
 cd sdk/typescript && npm ci && npm run build
 cd ../mcp-server && npm ci && npm run build
-PAYRAIDER_BASE_URL=https://<your-payraider-api> npm start            # stdio
-PAYRAIDER_BASE_URL=https://<your-payraider-api> npm start -- --http  # POST /mcp
+npm start            # stdio, hosted mainnet API
+npm start -- --http  # POST /mcp
 ```
 
 Or run it as a container:
@@ -79,7 +81,6 @@ Or run it as a container:
 ```bash
 docker build -f sdk/mcp-server/Dockerfile -t payraider-mcp sdk
 docker run -p 3333:3333 \
-  -e PAYRAIDER_BASE_URL=https://<your-payraider-api> \
   -e PAYRAIDER_MCP_AUTH_TOKEN=$(openssl rand -hex 32) \
   payraider-mcp
 ```

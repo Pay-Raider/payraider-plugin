@@ -1,4 +1,5 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
+import { HOSTED_API_URL } from "./hosted.js";
 import { NetworkContextManagement, SDKError } from "../src/index.js";
 
 describe("NetworkContextManagement", () => {
@@ -15,18 +16,14 @@ describe("NetworkContextManagement", () => {
 
     expect(result.success).toBe(true);
     expect(result.network).toBe("mainnet");
-    expect(result.data.baseUrl).toBe("https://api.payraider.io");
+    expect(result.data.baseUrl).toBe(HOSTED_API_URL);
     expect(result.data.headers["X-Stellar-Network"]).toBe("mainnet");
     expect(result.data.clientName).toBe("web-app");
     expect(typeof result.data.configuredAt).toBe("string");
   });
 
-  it("resolves testnet context when network override is provided", async () => {
-    const result = await manager.execute({ network: "testnet" });
-
-    expect(result.network).toBe("testnet");
-    expect(result.data.baseUrl).toBe("https://testnet-api.payraider.io");
-    expect(result.data.headers["X-Stellar-Network"]).toBe("testnet");
+  it("refuses testnet without a baseUrl, since no testnet API is hosted", async () => {
+    await expect(manager.execute({ network: "testnet" })).rejects.toThrow(/no hosted PayRaider API for testnet/);
   });
 
   it("uses custom baseUrl from config", async () => {
@@ -96,8 +93,9 @@ describe("NetworkContextManagement", () => {
     expect(manager.getHeaders("testnet")).toEqual({ "X-Stellar-Network": "testnet" });
   });
 
-  it("getBaseUrl returns network-specific default URL", () => {
-    expect(manager.getBaseUrl("testnet")).toBe("https://testnet-api.payraider.io");
+  it("getBaseUrl returns the hosted URL for mainnet and refuses testnet", () => {
+    expect(manager.getBaseUrl("mainnet")).toBe(HOSTED_API_URL);
+    expect(() => manager.getBaseUrl("testnet")).toThrow(/testnet/);
   });
 
   // ── cache ──────────────────────────────────────────────────────────────────

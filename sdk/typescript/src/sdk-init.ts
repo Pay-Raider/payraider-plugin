@@ -1,4 +1,5 @@
 import type { PayRaiderConfig } from "./types.js";
+import { DEFAULT_TIMEOUT_MS, HOSTED_API_URL, NO_TESTNET_API } from "./hosted.js";
 
 /**
  * SDK initialization configuration with network awareness
@@ -100,8 +101,8 @@ export class EnvironmentDetector {
 const DEFAULT_CONFIG: SDKInitConfig = {
   debug: false,
   network: "mainnet",
-  baseUrl: "https://api.payraider.io",
-  timeout: 30000,
+  baseUrl: HOSTED_API_URL,
+  timeout: DEFAULT_TIMEOUT_MS,
   maxRetries: 3,
   retryDelay: 500,
   autoRetry: true,
@@ -127,7 +128,7 @@ export class SDKInitializer {
 
     // Network-specific URL override
     if (mergedConfig.network === "testnet" && !config.baseUrl) {
-      mergedConfig.baseUrl = "https://testnet-api.payraider.io";
+      throw new Error(NO_TESTNET_API);
     }
 
     const environment = EnvironmentDetector.detectEnvironment();
@@ -222,12 +223,10 @@ export class SDKInitializer {
   static switchNetwork(network: "mainnet" | "testnet"): void {
     this.setConfig("network", network);
     if (network === "testnet") {
-      this.setConfig(
-        "baseUrl",
-        "https://testnet-api.payraider.io"
-      );
+      // Keep a caller-supplied backend; there is no hosted testnet API.
+      if (this.getConfig("baseUrl") === HOSTED_API_URL) throw new Error(NO_TESTNET_API);
     } else {
-      this.setConfig("baseUrl", "https://api.payraider.io");
+      this.setConfig("baseUrl", HOSTED_API_URL);
     }
   }
 

@@ -23,8 +23,8 @@ Set these in the environment Claude runs in:
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `PAYRAIDER_BASE_URL` | yes, for your own backend | URL of the PayRaider backend to read from |
-| `PAYRAIDER_NETWORK` | no | `mainnet` or `testnet` (default); only picks the default backend URL |
+| `PAYRAIDER_BASE_URL` | no | Your own PayRaider backend. Default: the hosted mainnet API |
+| `PAYRAIDER_NETWORK` | no | `mainnet` (default) or `testnet`. Testnet has no hosted API, so it needs `PAYRAIDER_BASE_URL` |
 | `PAYRAIDER_API_KEY` | no | Without it the free anonymous tier applies |
 
 ## Use

@@ -110,8 +110,8 @@ from this repository.
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `PAYRAIDER_BASE_URL` | the network's hosted API | Backend the server reads from. Set this to your own deployment. |
-| `PAYRAIDER_NETWORK` | `testnet` | `mainnet` or `testnet`; only picks the default base URL |
+| `PAYRAIDER_BASE_URL` | the hosted mainnet API | Backend the server reads from. Set it to use your own deployment. |
+| `PAYRAIDER_NETWORK` | `mainnet` | `mainnet` or `testnet`. Testnet has no hosted API, so it needs `PAYRAIDER_BASE_URL` |
 | `PAYRAIDER_API_KEY` | none | Optional. Without it the free anonymous tier applies |
 | `PAYRAIDER_MCP_TRANSPORT` | `stdio` | `stdio` or `http` (`--stdio` / `--http` override it) |
 | `HOST`, `PORT` | `127.0.0.1`, `3333` | HTTP bind address |
