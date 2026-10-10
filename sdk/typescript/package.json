@@ -2,7 +2,7 @@
   "name": "@payraider/sdk",
   "version": "1.0.0",
   "description": "Official TypeScript SDK for the PayRaider API",
-  "homepage": "https://github.com/Pay-Raider/payraider-plugin/tree/main/sdk/typescript#readme",
+  "homepage": "https://github.com/Pay-Raider/payraider-plugin#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Pay-Raider/payraider-plugin.git",
@@ -10,9 +10,6 @@
   },
   "bugs": {
     "url": "https://github.com/Pay-Raider/payraider-plugin/issues"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -24,13 +21,18 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
     "generate": "bash scripts/generate-bindings.sh",
     "test": "vitest run",
     "test:testnet": "vitest run --include 'tests/testnet/**/*.test.ts'",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "stellar",
@@ -42,11 +44,12 @@
     "authentication",
     "retry-backoff"
   ],
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
     "@types/node": "^26.6.1",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "vitest": "4.1.10"
-  }
+  },
+  "private": true
 }

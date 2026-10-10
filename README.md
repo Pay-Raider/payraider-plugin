@@ -4,7 +4,7 @@
 
 Before money moves, ask PayRaider whether the corridor is healthy enough to pay on. You get `proceed`, `caution`, `hold` or `unknown`, the reasons, and healthier alternatives.
 
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-proprietary-8c4a1c.svg)](LICENSE)
 ![TypeScript](https://img.shields.io/badge/TypeScript-SDK-3178c6)
 ![Python](https://img.shields.io/badge/Python-SDK-3776ab)
 ![MCP](https://img.shields.io/badge/MCP-server-black)
@@ -107,4 +107,6 @@ The Claude plugin ships a single-file build of the MCP server (`plugins/payraide
 
 ## License
 
-[Apache 2.0](LICENSE)
+Proprietary. Copyright (c) 2026 PayRaider. All rights reserved.
+
+This is **not open source**. The code is visible for review only; you may not use, copy, modify, deploy or distribute it without written permission from PayRaider. See [LICENSE](LICENSE).

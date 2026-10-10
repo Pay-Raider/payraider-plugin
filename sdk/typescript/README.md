@@ -108,4 +108,4 @@ top of this SDK.
 
 ## License
 
-MIT
+Proprietary. All rights reserved. Use requires written permission from PayRaider. See [LICENSE](LICENSE).

@@ -7,6 +7,6 @@
   },
   "homepage": "https://github.com/Pay-Raider/payraider-plugin/tree/main/plugins/payraider",
   "repository": "https://github.com/Pay-Raider/payraider-plugin",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "keywords": ["stellar", "payments", "off-ramp", "preflight", "mcp"]
 }
